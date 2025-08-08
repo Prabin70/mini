@@ -34,7 +34,7 @@ A simple Learning Management System built using [your tech stack – e.g., MERN 
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/your-username/mini-lms.git
+git clone https://github.com/Prabin70/mini.git
 cd mini-lms
 
 # For backend
