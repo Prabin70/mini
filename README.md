@@ -1,10 +1,6 @@
-# mini_lms
-# mini
-
-
 # Mini LMS (Learning Management System)
 
-A simple Learning Management System built using [your tech stack – e.g., MERN / Next.js + Node.js + mongoDB. It allows instructors to upload courses and students to enroll, learn, and track progress.
+A simple Learning Management System built using Next.js + Node.js + mongoDB + Express.js. It allows instructors to upload courses and students to enroll, learn, and track progress.
 
 ---
 
