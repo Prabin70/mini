@@ -1,12 +1,13 @@
 const nodemailer = require("nodemailer");
+const { email, password } = require("../../config/env");
 
 const transportInfo = {
   host: "smtp.gmail.com",
   port: 587,
   secure: false,
   auth: {
-    user: "prabin.shresthadev77@gmail.com",
-    pass: "juik cqqd mmwk zupm", // Consider moving this to environment variables for security
+    user: email,
+    pass: password,
   },
 };
 
@@ -14,7 +15,7 @@ const sendEmail = async (mailInfo) => {
   try {
     const transporter = nodemailer.createTransport(transportInfo);
     const info = await transporter.sendMail(mailInfo);
-    console.log("Email sent:", info.messageId); // Optional log
+    console.log("Email sent:", info.messageId);
   } catch (error) {
     console.error("Email sending error:", error.message);
   }

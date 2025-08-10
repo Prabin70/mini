@@ -1,51 +1,56 @@
 const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const { cloudName, apiKey, apiSecret } = require("../config/env");
 const path = require("path");
+const fs = require("fs");
 
-const limits = {
-  fileSize: 1024 * 1024 * 2, // 2MB
-};
+// Cloudinary config
+cloudinary.config({
+  cloud_name: cloudName,
+  api_key: apiKey,
+  api_secret: apiSecret,
+});
 
+// Local storage before uploading to Cloudinary
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const staticFolder = "./public";
-    cb(null, staticFolder);
-  },
-
   filename: (req, file, cb) => {
-    const fileName = Date.now() + "-" + file.originalname;
-    cb(null, fileName);
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  const validExtension = [
-    ".png",
-    ".PNG",
-    ".jpg",
-    ".JPG",
-    ".pdf",
-    ".jpeg",
-    ".JPEG",
-    ".mp4",
-    ".svg",
-    ".doc",
-    ".docx",
-  ];
+  const ext = path.extname(file.originalname).toLowerCase();
+  const allowedImageExts = [".jpg", ".jpeg", ".png", ".gif", ".svg"];
+  const allowedVideoExts = [".mp4", ".mov", ".avi", ".mkv"];
 
-  const originalExtension = path.extname(file.originalname);
-  const isValidExtension = validExtension.includes(originalExtension);
-
-  if (isValidExtension) {
+  if (allowedImageExts.includes(ext) || allowedVideoExts.includes(ext)) {
     cb(null, true);
   } else {
-    cb(new Error("File is not supported"));
+    cb(
+      new Error("Unsupported file type! Only images and videos allowed."),
+      false
+    );
   }
 };
 
 const upload = multer({
   storage,
-  limits,
+  limits: { fileSize: 1024 * 1024 * 50 }, // 50 MB
   fileFilter,
 });
 
-module.exports = upload;
+// Function to upload to Cloudinary after multer saves locally
+const uploadToCloudinary = async (filePath, folder) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder,
+      resource_type: "auto", // auto detects image or video
+    });
+    fs.unlinkSync(filePath); // remove local file after upload
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { upload, uploadToCloudinary };

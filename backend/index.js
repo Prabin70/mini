@@ -2,28 +2,36 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const { port } = require("./src/config/env");
-const connectMongo = require("./src/db/mongo");
-const { connectPostgresDB, sequelize } = require("./src/db/postgres");
-const router = require("./src/routes/user.routes");
+const connectMongo = require("./src/db/connectMongo");
+const userRouter = require("./src/routes/user.routes");
 const courseRouter = require("./src/routes/course.routes");
-const instructorRouter = require("./src/routes/instructor.routes");
+const adminRouter = require("./src/routes/admin.routes");
 const fileRouter = require("./src/routes/file.routes");
 
 const app = express();
+
+connectMongo();
+
 app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
 
-connectMongo();
-
-app.use("/api/users", router);
+app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
-app.use("/api/instructors", instructorRouter);
-app.use("/api/files", fileRouter);
+app.use("/api/admin", adminRouter);
+app.use("/api/file", fileRouter);
+
+app.get("/", (req, res) => {
+  res.send("Server is working properly");
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 app.use(express.static(path.join(__dirname, "public")));
