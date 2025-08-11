@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/register", register);
 router.get("/verify-through-link", verifyThroughLink);
-router.post("/signin", login);
+router.post("/login", login);
 
 module.exports = router;

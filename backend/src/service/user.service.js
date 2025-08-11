@@ -44,7 +44,7 @@ const verifyUserCode = async ({ email, code }) => {
 };
 
 const loginUser = async ({ email, password }) => {
-  const user = await UserModel.findOne({ where: { email } });
+  const user = await UserModel.findOne({ email });
   if (!user) throw new Error("User not found");
 
   const isMatch = await comparePassword(password, user.password);

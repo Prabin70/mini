@@ -7,6 +7,7 @@ const userRouter = require("./src/routes/user.routes");
 const courseRouter = require("./src/routes/course.routes");
 const adminRouter = require("./src/routes/admin.routes");
 const fileRouter = require("./src/routes/file.routes");
+const enrollmentRouter = require("./src/routes/enrollment.routes");
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3001",
     credentials: true,
   })
 );
@@ -25,6 +26,7 @@ app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/file", fileRouter);
+app.use("/api/enrollment", enrollmentRouter);
 
 app.get("/", (req, res) => {
   res.send("Server is working properly");

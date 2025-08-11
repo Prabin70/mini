@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
 
 exports.verifyThroughLink = async (req, res, next) => {
   try {
-    const { email, code } = req.body;
+    const { email, code } = req.query;
     const result = await verifyUserCode({ email, code });
     successResponse(res, 200, "User verified successfully", result);
   } catch (error) {

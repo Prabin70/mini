@@ -1,10 +1,12 @@
 import React from "react";
-import LandingPage from "../components/landing/page";
+import AboutUs from "./AboutUs";
+import Features from "./Features";
 
 const page = () => {
   return (
     <div>
-      <LandingPage />
+      <AboutUs />
+      <Features />
     </div>
   );
 };
