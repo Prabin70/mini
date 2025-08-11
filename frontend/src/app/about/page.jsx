@@ -12,6 +12,7 @@ const AboutUs = () => {
 
   return (
     <>
+      <title>About us || E-learning</title>
       <section
         className="py-16  sm:py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center"
         style={{ backgroundColor: SECTION_BACKGROUND_COLOR }}

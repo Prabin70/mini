@@ -68,6 +68,7 @@ function SignupForm() {
 
   return (
     <>
+      <title>Sign up || E-learning</title>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">

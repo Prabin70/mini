@@ -17,22 +17,22 @@ const createEnrollment = async ({
   return response;
 };
 
-const fetchEnrollment = async ({ data }) => {
-  const response = await Enrollment.find(data);
+const fetchEnrollment = async () => {
+  const response = await Enrollment.find();
   return response;
 };
 
-const fetchEnrollmentById = async ({ id }) => {
+const fetchEnrollmentById = async (id) => {
   const response = await Enrollment.findById(id);
   return response;
 };
 
-const updateEnrollment = ({ id }) => {
-  const response = Enrollment.findByIdAndUpdate(id);
+const updateEnrollment = (id, data) => {
+  const response = Enrollment.findByIdAndUpdate(id, data, { new: true });
   return response;
 };
 
-const deleteEnrollment = ({ id }) => {
+const deleteEnrollment = (id) => {
   const response = Enrollment.findByIdAndDelete(id);
   return response;
 };

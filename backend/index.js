@@ -22,6 +22,13 @@ app.use(
   })
 );
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/admin", adminRouter);

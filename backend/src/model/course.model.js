@@ -18,6 +18,10 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    instructor: {
+      type: String,
+      required: true,
+    },
     courseDuration: {
       type: String,
       required: true,
