@@ -18,15 +18,12 @@ const createEnrollment = async ({
 };
 
 const fetchEnrollment = async () => {
-  const response = await Enrollment.find();
-  return response;
+  return await Enrollment.find().populate("course", "courseTitle").exec();
 };
 
 const fetchEnrollmentById = async (id) => {
-  const response = await Enrollment.findById(id);
-  return response;
+  return await Enrollment.findById(id).populate("course", "courseTitle");
 };
-
 const updateEnrollment = (id, data) => {
   const response = Enrollment.findByIdAndUpdate(id, data, { new: true });
   return response;

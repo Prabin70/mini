@@ -4,14 +4,12 @@ const { cloudName, apiKey, apiSecret } = require("../config/env");
 const path = require("path");
 const fs = require("fs");
 
-// Cloudinary config
 cloudinary.config({
   cloud_name: cloudName,
   api_key: apiKey,
   api_secret: apiSecret,
 });
 
-// Local storage before uploading to Cloudinary
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -35,18 +33,17 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({
   storage,
-  limits: { fileSize: 1024 * 1024 * 50 }, // 50 MB
+  limits: { fileSize: 1024 * 1024 * 50 },
   fileFilter,
 });
 
-// Function to upload to Cloudinary after multer saves locally
 const uploadToCloudinary = async (filePath, folder) => {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       folder,
-      resource_type: "auto", // auto detects image or video
+      resource_type: "auto",
     });
-    fs.unlinkSync(filePath); // remove local file after upload
+    fs.unlinkSync(filePath);
     return result;
   } catch (error) {
     throw error;

@@ -6,6 +6,13 @@ import axios from "axios";
 import baseUrl from "../../config/env";
 import Link from "next/link";
 
+// ✅ Helper function to build correct URLs
+const buildUrl = (path) => {
+  if (!path) return "";
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  return `${baseUrl}/${path}`.replace(/([^:]\/)\/+/g, "$1");
+};
+
 const CourseSection = () => {
   const [courses, setCourses] = useState([]);
 
@@ -17,10 +24,10 @@ const CourseSection = () => {
             "Content-Type": "application/json",
           },
         });
+        console.log("API Courses:", res.data.data);
         setCourses(res.data.data);
-        console.log(res.data);
       } catch (error) {
-        console.log(error.message);
+        console.log("Error fetching courses:", error.message);
       }
     };
     fetchAllCourses();
@@ -47,7 +54,7 @@ const CourseSection = () => {
                          hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ease-in-out"
               >
                 <img
-                  src={`${baseUrl}/${course.courseImage}`}
+                  src={buildUrl(course.courseImage)}
                   alt={course.courseTitle}
                   className="w-full h-48 object-cover"
                 />
