@@ -1,51 +1,30 @@
-const { generateToken } = require("../lib/jwt/jwt");
-const {
-  findAdminByEmail,
-  createAdmin,
-  verifyPassword,
-} = require("../service/admin.service");
-const { errorResponse, successResponse } = require("../utils/response");
+const { adminLoginService } = require("../service/admin.service");
 
-const registerAdmin = async (req, res) => {
+const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { name, email, password } = req.body;
+    const result = await adminLoginService(email, password);
 
-    const existing = await findAdminByEmail(email);
-    if (existing) {
-      return errorResponse(res, 400, new Error("Email already registered"));
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        token: result.token,
+        message: "Login successful",
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
     }
-
-    const admin = await createAdmin({ name, email, password });
-    return successResponse(res, 201, "Admin registered successfully", {
-      admin,
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      error: err.message,
     });
-  } catch (error) {
-    return errorResponse(res, 500, error);
   }
 };
 
-const loginAdmin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const admin = await findAdminByEmail(email);
-    if (!admin) {
-      return errorResponse(res, 404, new Error("Admin not found"));
-    }
-
-    const isMatch = await verifyPassword(password, admin.password);
-    if (!isMatch) {
-      return errorResponse(res, 401, new Error("Invalid credentials"));
-    }
-
-    const token = generateToken({ id: admin._id, email: admin.email });
-    return successResponse(res, 200, "Login successful", { token });
-  } catch (error) {
-    return errorResponse(res, 500, error);
-  }
-};
-
-module.exports = {
-  registerAdmin,
-  loginAdmin,
-};
+module.exports = { adminLogin };

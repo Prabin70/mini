@@ -34,11 +34,11 @@ const Sidebar = () => {
       text: "Analytics",
       path: "/analytics",
     },
-    {
-      icon: <MdInventory2 size={20} />,
-      text: "Inventory",
-      path: "/inventory",
-    },
+    // {
+    //   icon: <MdInventory2 size={20} />,
+    //   text: "Inventory",
+    //   path: "/inventory",
+    // },
   ];
 
   return (

@@ -1,26 +1,16 @@
-const { hashPassword, comparePassword } = require("../lib/bcrypt/bcrypt");
-const Admin = require("../model/admin.model");
+const jwt = require("jsonwebtoken");
 
-const createAdmin = async (data) => {
-  const hashedPassword = await hashPassword(data.password);
-  const adminData = {
-    ...data,
-    password: hashedPassword,
-    role: "admin",
-  };
-  return await Admin.create(adminData);
+const hardcodedEmail = "admin@gmail.com";
+const hardcodedPassword = "admin123";
+
+const adminLoginService = async (email, password) => {
+  if (email === hardcodedEmail && password === hardcodedPassword) {
+    const token = jwt.sign({ email, role: "admin" }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    return { success: true, token };
+  }
+  return { success: false };
 };
 
-const findAdminByEmail = async (email) => {
-  return await Admin.findOne({ email });
-};
-
-const verifyPassword = async (enteredPassword, hashedPassword) => {
-  return await comparePassword(enteredPassword, hashedPassword);
-};
-
-module.exports = {
-  createAdmin,
-  findAdminByEmail,
-  verifyPassword,
-};
+module.exports = { adminLoginService };

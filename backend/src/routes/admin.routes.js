@@ -1,16 +1,8 @@
 const express = require("express");
-const { registerAdmin, loginAdmin } = require("../controller/admin.controller");
-const isAuthenticated = require("../middleware/isAuthenticated");
-const isAuthorized = require("../middleware/isAuthorized");
+const { adminLogin } = require("../controller/admin.controller");
 
-const adminRouter = express.Router();
+const router = express.Router();
 
-adminRouter.post(
-  "/register",
-  isAuthenticated,
-  isAuthorized(["admin"]),
-  registerAdmin
-);
-adminRouter.post("/login", loginAdmin);
+router.post("/login", adminLogin);
 
-module.exports = adminRouter;
+module.exports = router;

@@ -186,6 +186,13 @@ function LoginForm() {
                 )}
               </button>
             </div>
+            <div className="text-black ">
+              Don't have na account?{" "}
+              <a href="/auth/signup" className="text-blue-700 hover:underline">
+                Sign up
+              </a>{" "}
+              for free
+            </div>
           </form>
         </div>
       </div>

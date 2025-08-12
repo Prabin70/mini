@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import baseUrl from "../../config/env";
+import baseUrl from "../../../config/env";
 import { CheckCircle2, Trash2, Edit2 } from "lucide-react";
 
 import { BiSolidEdit } from "react-icons/bi";
