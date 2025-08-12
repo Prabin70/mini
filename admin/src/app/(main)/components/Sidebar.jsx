@@ -8,10 +8,12 @@ import { LuLogOut, LuUsersRound } from "react-icons/lu";
 import { MdInventory2, MdOutlineSpaceDashboard } from "react-icons/md";
 import { FaFeatherAlt } from "react-icons/fa";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
   const [lightMode, setLightMode] = useState(false);
+  const router = useRouter();
 
   const navItems = [
     {
@@ -34,12 +36,12 @@ const Sidebar = () => {
       text: "Analytics",
       path: "/analytics",
     },
-    // {
-    //   icon: <MdInventory2 size={20} />,
-    //   text: "Inventory",
-    //   path: "/inventory",
-    // },
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+  };
 
   return (
     <aside
@@ -122,7 +124,10 @@ const Sidebar = () => {
       </nav>
 
       <div className="border-t border-gray-800 p-3">
-        <div className="relative flex items-center py-2.5 px-3 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 hover:text-purple-300 transition-colors group">
+        <div
+          className="relative flex items-center py-2.5 px-3 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 hover:text-purple-300 transition-colors group"
+          onClick={handleLogout}
+        >
           <LuLogOut size={20} />
           <span
             className={`overflow-hidden transition-all duration-200 ${
