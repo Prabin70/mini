@@ -17,21 +17,22 @@ A simple Learning Management System built using Next.js + Node.js + mongoDB + Ex
 
 ---
 
-## 🛠Tech Stack
+## Tools I used in my projects... ***
 
 - **Frontend:** Next.js / Tailwind CSS
 - **Backend:** Node.js / Express
 - **Database:** MongoDB 
-- **Authentication:** JWT / Passport.js
-- **Storage:**  Local 
+- **Authentication:** JWT 
+- **Storage:**  Local
+- **Images:** cloudinary
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 git clone https://github.com/Prabin70/mini.git
-cd mini-lms
+cd mini
 
 # For backend
 cd server
@@ -39,6 +40,11 @@ npm install
 npm run dev
 
 # For frontend
+cd client
+npm install
+npm run dev
+
+# For admin
 cd client
 npm install
 npm run dev
