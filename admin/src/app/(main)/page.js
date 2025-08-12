@@ -1,9 +1,13 @@
-import { redirect } from "next/dist/server/api-utils";
-import React from "react";
+import { redirect } from "next/navigation";
 
-const page = () => {
-  redirect("/");
-  return <></>;
-};
+export default function Page() {
+  const isLoggedIn = localStorage.getItem("token");
 
-export default page;
+  if (isLoggedIn) {
+    redirect("/dashboard");
+  } else {
+    redirect("/");
+  }
+}
+
+return <div>Please login first</div>;

@@ -1,6 +1,5 @@
 import { Arimo } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/app/(main)/components/Sidebar";
 
 const arimo = Arimo({
   subsets: ["latin"],
