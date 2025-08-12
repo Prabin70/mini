@@ -1,11 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import baseUrl from "../../../config/env";
 
-export default function VerifyEmail() {
+const VerifyEmail = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const code = searchParams.get("code");
@@ -52,4 +52,14 @@ export default function VerifyEmail() {
       </div>
     </div>
   );
-}
+};
+
+const Page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmail />
+    </Suspense>
+  );
+};
+
+export default Page;
